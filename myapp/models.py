@@ -14,6 +14,9 @@ class Product(models.Model):
         if self.price <= 0:
             raise ValidationError('The price must be a positive value.')
 
+    def clean(self):
+        self.validate_positive_price()
+
     def save(self, *args, **kwargs):
         self.validate_positive_price()
         super().save(*args, **kwargs)
