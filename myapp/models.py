@@ -53,3 +53,8 @@ class Order(models.Model):
             if not product.available:
                 return False
         return True
+
+    def clean(self):
+        if self.status not in dict(self.STATUS_CHOICES):
+            raise ValidationError(
+                f"Invalid status value: '{self.status}'. Allowed values are: {', '.join(dict(self.STATUS_CHOICES).keys())}")
